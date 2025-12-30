@@ -5,7 +5,7 @@ defmodule Aoc2015.Ben.Day02 do
     |> Enum.reduce(0, &process_wrapping_paper/2)
   end
 
-  defp process_wrapping_paper([w, h, l] = list, acc), 
+  defp process_wrapping_paper([w, h, l], acc), 
     do: with(
       surface_area = 2 * l * w + 2 * w * h + 2 * h * l,
       [smallest, next, _largest] = Enum.sort([w, h, l], :asc),

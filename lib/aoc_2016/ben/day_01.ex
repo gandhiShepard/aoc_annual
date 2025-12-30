@@ -1,9 +1,7 @@
 defmodule Aoc2016.Ben.Day01 do
   @moduledoc """
   --- Day 1: No Time for a Taxicab ---
-  """ 
-
-
+  """
 
   def walk_all_instructions(input) do
     input
@@ -36,7 +34,6 @@ defmodule Aoc2016.Ben.Day01 do
       {:left, :west} -> south(blocks, acc)
       {:left, :south} -> east(blocks, acc)
       {:left, :east} -> north(blocks, acc)
-
       {:right, :north} -> east(blocks, acc)
       {:right, :east} -> south(blocks, acc)
       {:right, :south} -> west(blocks, acc)
@@ -44,52 +41,52 @@ defmodule Aoc2016.Ben.Day01 do
     end
   end
 
-  defp north(blocks, {direction, {y, x}, seen}) do
+  defp north(blocks, {_direction, {y, x}, seen}) do
     with(
-      path = (for i <- blocks..1//-1, do: {y - i, x}),
+      path = for(i <- blocks..1//-1, do: {y - i, x}),
       [new_position | _] = path,
       path_set = MapSet.new(path),
-      result = seen?(:north, new_position, seen, path_set), 
+      result = seen?(:north, new_position, seen, path_set),
       do: result
     )
   end
 
-  defp south(blocks, {direction, {y, x}, seen}) do
+  defp south(blocks, {_direction, {y, x}, seen}) do
     with(
-      path = (for i <- blocks..1//-1, do: {y + i, x}),
+      path = for(i <- blocks..1//-1, do: {y + i, x}),
       [new_position | _] = path,
       path_set = MapSet.new(path),
-      result = seen?(:south, new_position, seen, path_set), 
+      result = seen?(:south, new_position, seen, path_set),
       do: result
     )
   end
 
-  defp east(blocks, {direction, {y, x}, seen}) do
+  defp east(blocks, {_direction, {y, x}, seen}) do
     with(
-      path = (for i <- blocks..1//-1, do: {y, x + i}),
+      path = for(i <- blocks..1//-1, do: {y, x + i}),
       [new_position | _] = path,
       path_set = MapSet.new(path),
-      result = seen?(:east, new_position, seen, path_set), 
+      result = seen?(:east, new_position, seen, path_set),
       do: result
     )
   end
 
-  defp west(blocks, {direction, {y, x}, seen}) do
+  defp west(blocks, {_direction, {y, x}, seen}) do
     with(
-      path = (for i <- blocks..1//-1, do: {y, x - i}),
+      path = for(i <- blocks..1//-1, do: {y, x - i}),
       [new_position | _] = path,
       path_set = MapSet.new(path),
-      result = seen?(:west, new_position, seen, path_set), 
+      result = seen?(:west, new_position, seen, path_set),
       do: result
     )
   end
 
-  defp seen?(direction, new_position, seen, path_set), 
+  defp seen?(direction, new_position, seen, path_set),
     do:
-      (if MapSet.disjoint?(seen, path_set), 
-      do: {:cont, {direction, new_position, MapSet.union(seen, path_set)}}, 
-      else: {:halt, MapSet.intersection(seen, path_set)})
-
+      if(MapSet.disjoint?(seen, path_set),
+        do: {:cont, {direction, new_position, MapSet.union(seen, path_set)}},
+        else: {:halt, MapSet.intersection(seen, path_set)}
+      )
 
   #
   # defp process_document_actual({:right, blocks} = _current_instructions, {:north, {y, x}, seen} = _acc) do
@@ -175,14 +172,14 @@ defmodule Aoc2016.Ben.Day01 do
   # defp trace_steps(:south, {y, x}, blocks), 
   #   do: Stream.unfold(blocks, fn 0 -> nil; n -> {{y + n, x}, n - 1} end) |> MapSet.new()
   #
-  
-  defp format_data(input), 
-    do: 
+
+  defp format_data(input),
+    do:
       input
       |> File.stream!()
       |> Stream.flat_map(&String.split(&1, ", "))
       # |> Enum.to_list()
-      |> Stream.map(fn 
+      |> Stream.map(fn
         "L" <> blocks -> {:left, String.to_integer(String.trim(blocks))}
         "R" <> blocks -> {:right, String.to_integer(String.trim(blocks))}
       end)

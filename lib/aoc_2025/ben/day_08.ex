@@ -8,7 +8,7 @@ defmodule Ben.Day08 do
     |> apply_euclidean_distance()
     |> Enum.sort(:asc)
     |> group_by_threshold(5.0)
-    |> Enum.group_by(fn {k, v} -> v end)
+    |> Enum.group_by(fn {_k, v} -> v end)
     # |> Enum.reverse()
     # |> Enum.sort_by(&length(&1), :desc)
     # |> Enum.take(3)
