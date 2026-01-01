@@ -84,7 +84,7 @@ defmodule Aoc2017.Ben.Day01Test do
     }
   end
   
-  defp test_data, do: "./test/aoc_2017/ben/data/day_one" |> stream()
+  defp test_data, do: "./test/aoc_2017/ben/data/day_01" |> stream()
 
 
   describe "captcha_solver/1" do
